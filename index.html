@@ -1,0 +1,2306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prépa Excellentia Wantanshi — Nathan</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f4f4;
+  color:#222;
+}
+
+.hidden{
+  display:none!important;
+}
+
+button{
+  cursor:pointer;
+  border:none;
+}
+
+#home{
+  min-height:100vh;
+  background:#c40000;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  padding:25px;
+}
+
+.watermark{
+  position:absolute;
+  font-size:clamp(80px,18vw,250px);
+  font-weight:900;
+  opacity:.08;
+  transform:rotate(-15deg);
+  white-space:nowrap;
+  user-select:none;
+}
+
+.home-box{
+  position:relative;
+  z-index:2;
+  background:rgba(0,0,0,.18);
+  padding:35px;
+  border-radius:20px;
+  width:min(600px,100%);
+  text-align:center;
+  box-shadow:0 10px 40px rgba(0,0,0,.25);
+}
+
+.home-box h1{
+  font-size:clamp(30px,6vw,55px);
+  margin-bottom:10px;
+}
+
+.home-box h2{
+  margin-bottom:25px;
+}
+
+.home-box input{
+  width:100%;
+  padding:15px;
+  border-radius:10px;
+  border:none;
+  font-size:17px;
+  margin:15px 0;
+}
+
+.primary{
+  background:white;
+  color:#b00000;
+  padding:15px 25px;
+  border-radius:10px;
+  font-size:17px;
+  font-weight:bold;
+}
+
+#test{
+  min-height:100vh;
+}
+
+.topbar{
+  background:#111;
+  color:white;
+  padding:12px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.timer{
+  font-size:22px;
+  font-weight:bold;
+  color:#ff5555;
+}
+
+.subject{
+  font-weight:bold;
+}
+
+.progress{
+  font-size:14px;
+}
+
+.reading{
+  min-height:calc(100vh - 60px);
+  padding:25px;
+  background:#fff;
+}
+
+.reading-inner{
+  max-width:950px;
+  margin:auto;
+}
+
+.reading h1{
+  color:#b00000;
+  margin-bottom:15px;
+}
+
+.reading-warning{
+  background:#fff3cd;
+  border-left:5px solid #ffb000;
+  padding:14px;
+  margin:15px 0;
+  border-radius:6px;
+}
+
+.text-box{
+  background:#fafafa;
+  border:1px solid #ddd;
+  padding:25px;
+  border-radius:12px;
+  line-height:1.75;
+  font-size:17px;
+  max-height:65vh;
+  overflow-y:auto;
+}
+
+.reading-actions{
+  margin-top:20px;
+  display:flex;
+  justify-content:center;
+}
+
+.skip-btn{
+  background:#b00000;
+  color:white;
+  padding:14px 22px;
+  border-radius:9px;
+  font-weight:bold;
+}
+
+.question-area{
+  max-width:900px;
+  margin:auto;
+  padding:25px;
+}
+
+.question-card{
+  background:white;
+  border-radius:15px;
+  padding:25px;
+  box-shadow:0 4px 20px rgba(0,0,0,.08);
+}
+
+.question-number{
+  color:#b00000;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.question{
+  font-size:21px;
+  line-height:1.5;
+  margin-bottom:22px;
+}
+
+.answers{
+  display:grid;
+  gap:12px;
+}
+
+.answer{
+  background:#f5f5f5;
+  border:2px solid #ddd;
+  padding:15px;
+  border-radius:10px;
+  text-align:left;
+  font-size:16px;
+  transition:.15s;
+}
+
+.answer:hover{
+  border-color:#b00000;
+}
+
+.answer.selected{
+  background:#ffe0e0;
+  border-color:#b00000;
+}
+
+.next-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:20px;
+  flex-wrap:wrap;
+}
+
+.next-btn{
+  background:#111;
+  color:white;
+  padding:13px 20px;
+  border-radius:9px;
+  font-weight:bold;
+}
+
+.text-btn{
+  background:#eee;
+  padding:13px 20px;
+  border-radius:9px;
+}
+
+#results{
+  min-height:100vh;
+  padding:30px 15px;
+  background:#f5f5f5;
+}
+
+.results-box{
+  max-width:1000px;
+  margin:auto;
+}
+
+.results-title{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.total-score{
+  background:#111;
+  color:white;
+  border-radius:15px;
+  padding:25px;
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.total-score .big{
+  font-size:50px;
+  font-weight:bold;
+}
+
+.subject-results{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:15px;
+  margin-bottom:30px;
+}
+
+.subject-card{
+  background:white;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.subject-card h3{
+  color:#b00000;
+  margin-bottom:12px;
+}
+
+.stat{
+  margin:7px 0;
+}
+
+.errors{
+  background:white;
+  padding:25px;
+  border-radius:15px;
+}
+
+.error-item{
+  border-left:5px solid #d00000;
+  padding:15px;
+  margin:15px 0;
+  background:#fff7f7;
+  border-radius:5px;
+}
+
+.correct{
+  color:#087f23;
+  font-weight:bold;
+}
+
+.wrong{
+  color:#c00000;
+  font-weight:bold;
+}
+
+.explanation{
+  margin-top:10px;
+  background:#f2f2f2;
+  padding:12px;
+  border-radius:7px;
+}
+
+.footer{
+  text-align:center;
+  margin-top:35px;
+  font-weight:bold;
+  color:#555;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  z-index:100;
+}
+
+.modal-content{
+  background:white;
+  width:min(900px,100%);
+  max-height:85vh;
+  overflow:auto;
+  border-radius:15px;
+  padding:25px;
+  line-height:1.7;
+}
+
+.close{
+  float:right;
+  background:#b00000;
+  color:white;
+  padding:8px 13px;
+  border-radius:7px;
+}
+
+.total-time{
+  margin-top:10px;
+  font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= ACCUEIL ================= -->
+
+<section id="home">
+
+  <div class="watermark">NATHAN</div>
+
+  <div class="home-box">
+    <h1>PRÉPA EXCELLENTIA</h1>
+    <h2>Wantanshi</h2>
+
+    <p>Test blanc — 100 QCM</p>
+    <p>25 Anglais • 25 Français • 25 Maths • 25 Culture générale</p>
+
+    <input
+      id="participantName"
+      type="text"
+      placeholder="Entrez votre nom complet"
+      autocomplete="off"
+    >
+
+    <button class="primary" onclick="startTest()">
+      COMMENCER LE TEST
+    </button>
+  </div>
+
+</section>
+
+
+<!-- ================= TEST ================= -->
+
+<section id="test" class="hidden">
+
+  <div class="topbar">
+    <div class="subject" id="subjectName"></div>
+    <div class="progress" id="progress"></div>
+    <div class="timer" id="timer">01:00</div>
+  </div>
+
+  <!-- LECTURE -->
+
+  <div id="readingPhase" class="reading hidden">
+
+    <div class="reading-inner">
+
+      <h1 id="readingTitle"></h1>
+
+      <div class="reading-warning">
+        <strong>Temps de lecture : 15 minutes maximum.</strong><br>
+        Vous pouvez prendre le temps nécessaire pour lire le texte
+        ou cliquer immédiatement sur « Passer aux questions ».
+        Si vous utilisez moins de 15 minutes, le temps non utilisé
+        n'est pas comptabilisé.
+      </div>
+
+      <div class="text-box" id="readingText"></div>
+
+      <div class="reading-actions">
+        <button class="skip-btn" onclick="skipReading()">
+          PASSER AUX QUESTIONS →
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- QUESTIONS -->
+
+  <div id="questionPhase" class="question-area hidden">
+
+    <div class="question-card">
+
+      <div class="question-number" id="questionNumber"></div>
+
+      <div class="question" id="questionText"></div>
+
+      <div class="answers" id="answers"></div>
+
+      <div class="next-row">
+
+        <button
+          id="textReviewBtn"
+          class="text-btn hidden"
+          onclick="openText()"
+        >
+          👁 Jeter un coup d'œil au texte
+        </button>
+
+        <button
+          class="next-btn"
+          onclick="nextQuestion()"
+        >
+          QUESTION SUIVANTE →
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= MODAL TEXTE ================= -->
+
+<div id="textModal" class="modal hidden">
+
+  <div class="modal-content">
+
+    <button class="close" onclick="closeText()">Fermer</button>
+
+    <h2 id="modalTitle"></h2>
+
+    <br>
+
+    <div id="modalText"></div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= RESULTATS ================= -->
+
+<section id="results" class="hidden">
+
+  <div class="results-box">
+
+    <div class="results-title">
+      <h1>RÉSULTATS DU TEST</h1>
+      <p id="participantResult"></p>
+    </div>
+
+    <div class="total-score">
+
+      <div>Score total</div>
+
+      <div class="big" id="totalScore"></div>
+
+      <div id="totalPercentage"></div>
+
+      <div id="totalMistakes"></div>
+
+      <div class="total-time" id="totalTime"></div>
+
+    </div>
+
+
+    <h2>Résultats par matière</h2>
+
+    <br>
+
+    <div class="subject-results" id="subjectResults"></div>
+
+
+    <div class="errors">
+
+      <h2>❌ Détail des erreurs</h2>
+
+      <p style="margin-top:8px;">
+        Voici les questions auxquelles vous avez répondu incorrectement,
+        avec la bonne réponse et l'explication.
+      </p>
+
+      <div id="errorList"></div>
+
+    </div>
+
+    <div class="footer">
+      by Nathan
+    </div>
+
+  </div>
+
+</section>
+
+
+<script>
+
+/* =========================================================
+   TEXTES
+========================================================= */
+
+const englishText = `
+Learning to Succeed
+
+For many students, success is often associated with obtaining high marks.
+However, Maya, a seventeen-year-old student, gradually discovered that
+success could mean something much deeper.
+
+At the beginning of the school year, Maya was disappointed by her first
+mathematics examination. She had studied for several hours, but she had
+made many small mistakes. She initially thought that she was simply not
+good at mathematics. For several days, she avoided talking about the
+examination because she was afraid that her classmates would think she
+was less intelligent than they were.
+
+One afternoon, her teacher asked her to stay after class. Instead of
+criticising her, the teacher looked carefully at her examination and
+helped her identify the source of her mistakes. Some mistakes came from
+rushing through calculations. Others came from not reading the questions
+carefully enough. A few mistakes were caused by concepts that Maya had
+not completely understood.
+
+The teacher then gave Maya a simple piece of advice: she should stop
+thinking only about her mark and start studying the process that had led
+to that mark. Every evening, Maya began to review her lessons for a short
+period of time. She wrote down the questions she did not understand and
+tried to solve similar exercises. When she made a mistake, she no longer
+immediately erased it. Instead, she tried to understand why she had made
+it.
+
+After several weeks, Maya noticed an important change. She was still
+making mistakes, but she was making fewer of the same mistakes. She also
+became more comfortable asking questions in class. Instead of hiding her
+difficulties, she started discussing them with her classmates.
+
+Maya eventually created a small study group with three other students.
+Each student had different strengths. One was particularly good at
+mathematics, another enjoyed reading and writing, while the third was
+excellent at explaining scientific ideas. They discovered that helping
+one another made studying more interesting and effective.
+
+Maya also began helping younger students at her school. At first, she
+thought that she needed to know everything before she could help someone
+else. She soon understood that explaining a simple idea could also help
+her understand it better herself.
+
+By the end of the year, Maya's grades had improved considerably. Yet,
+when someone asked her what her greatest achievement was, she did not
+mention her final marks. She said that she had learned how to learn.
+
+For Maya, an error was no longer proof of failure. It was information.
+A difficult exercise was not a reason to give up. It was an opportunity
+to discover what she still needed to understand. She had learned that
+progress does not always happen quickly, but regular effort can produce
+important results over time.
+
+Her experience also changed the way she thought about other students.
+She realised that a classmate who receives a low mark may not necessarily
+be less intelligent. That student may simply need a different method,
+more practice, better explanations, or more time.
+
+Maya's story therefore became a lesson that she shared with others:
+success is not simply about reaching a destination. It is also about
+understanding the journey, recognising one's weaknesses, learning from
+mistakes, and continuing to improve.
+`;
+
+
+const frenchText = `
+Apprendre à réussir
+
+Pour beaucoup d'élèves, la réussite scolaire est souvent associée aux
+bonnes notes. Pourtant, Maya, une élève de dix-sept ans, a progressivement
+découvert que la réussite pouvait avoir une signification beaucoup plus
+profonde.
+
+Au début de l'année scolaire, Maya fut déçue par son premier contrôle de
+mathématiques. Elle avait étudié pendant plusieurs heures, mais elle avait
+commis de nombreuses petites erreurs. Elle pensa d'abord qu'elle n'était
+tout simplement pas douée en mathématiques. Pendant plusieurs jours, elle
+évita de parler de son contrôle parce qu'elle avait peur que ses camarades
+la considèrent comme moins intelligente qu'eux.
+
+Un après-midi, son professeur lui demanda de rester après le cours.
+Au lieu de la critiquer, il examina attentivement son contrôle et l'aida
+à identifier l'origine de ses erreurs. Certaines provenaient de calculs
+effectués trop rapidement. D'autres étaient dues au fait qu'elle ne lisait
+pas suffisamment les questions. Quelques erreurs étaient enfin liées à des
+notions qu'elle n'avait pas complètement comprises.
+
+Le professeur lui donna alors un conseil simple : elle devait cesser de
+penser uniquement à sa note et commencer à étudier le processus qui avait
+conduit à cette note. Chaque soir, Maya se mit à réviser ses leçons pendant
+une courte période. Elle notait les questions qu'elle ne comprenait pas et
+essayait ensuite de résoudre des exercices similaires. Lorsqu'elle faisait
+une erreur, elle ne l'effaçait plus immédiatement. Elle cherchait plutôt à
+comprendre pourquoi elle l'avait commise.
+
+Après plusieurs semaines, Maya remarqua un changement important. Elle
+faisait encore des erreurs, mais elle répétait beaucoup moins les mêmes
+erreurs. Elle devint également plus à l'aise pour poser des questions en
+classe. Au lieu de cacher ses difficultés, elle commença à en discuter avec
+ses camarades.
+
+Maya créa finalement un petit groupe d'étude avec trois autres élèves.
+Chaque membre possédait des qualités différentes. L'un était particulièrement
+fort en mathématiques, une autre aimait la lecture et l'écriture, tandis
+que le troisième excellait dans l'explication des notions scientifiques.
+Ils découvrirent que s'aider mutuellement rendait le travail plus
+intéressant et plus efficace.
+
+Maya commença également à aider des élèves plus jeunes de son école. Au
+début, elle pensait devoir tout savoir avant de pouvoir aider quelqu'un.
+Elle comprit rapidement qu'expliquer une idée simple à une autre personne
+pouvait aussi l'aider à mieux comprendre cette idée.
+
+À la fin de l'année, les résultats de Maya s'étaient considérablement
+améliorés. Pourtant, lorsqu'on lui demanda quelle était sa plus grande
+réussite, elle ne parla pas de ses notes finales. Elle répondit qu'elle
+avait appris à apprendre.
+
+Pour Maya, une erreur n'était désormais plus une preuve d'échec. C'était
+une information. Un exercice difficile n'était pas une raison d'abandonner,
+mais une occasion de découvrir ce qu'elle devait encore comprendre. Elle
+avait appris que les progrès ne sont pas toujours rapides, mais que des
+efforts réguliers peuvent produire des résultats importants avec le temps.
+
+Son expérience changea également sa manière de considérer les autres
+élèves. Elle comprit qu'un camarade qui obtient une mauvaise note n'est pas
+forcément moins intelligent. Il peut simplement avoir besoin d'une autre
+méthode, de davantage de pratique, de meilleures explications ou de plus
+de temps.
+
+L'histoire de Maya devint ainsi une leçon qu'elle partageait avec les
+autres : réussir ne signifie pas seulement atteindre une destination.
+C'est aussi comprendre le chemin parcouru, reconnaître ses faiblesses,
+apprendre de ses erreurs et continuer à progresser.
+`;
+
+
+/* =========================================================
+   BANQUE DE QUESTIONS
+=========================================================
+
+Chaque question possède :
+
+subject
+question
+A
+B
+C
+D
+correct
+explanation
+
+correct = 0,1,2,3
+========================================================= */
+
+const questions = [
+
+/* ================= ENGLISH ================= */
+
+{
+subject:"Anglais",
+q:"According to the text, what did Maya initially think after her first mathematics examination?",
+a:["She was not intelligent enough.","She was not good at mathematics.","Her teacher was unfair.","Her classmates had cheated."],
+c:1,
+e:"Maya initially thought that she was simply not good at mathematics."
+},
+
+{
+subject:"Anglais",
+q:"Why did Maya avoid talking about her examination?",
+a:["She had lost the examination paper.","She was afraid of being judged by her classmates.","She disliked her teacher.","She wanted to change schools."],
+c:1,
+e:"She was afraid that her classmates would think she was less intelligent."
+},
+
+{
+subject:"Anglais",
+q:"What did the teacher help Maya identify?",
+a:["Her classmates' mistakes.","The source of her mistakes.","A new school.","Her best subjects."],
+c:1,
+e:"The teacher helped her identify the source of her mistakes."
+},
+
+{
+subject:"Anglais",
+q:"Which problem caused some of Maya's mistakes?",
+a:["She rushed through calculations.","She never attended class.","She refused to study.","She forgot her books."],
+c:0,
+e:"Some mistakes came from rushing through calculations."
+},
+
+{
+subject:"Anglais",
+q:"What new habit did Maya develop?",
+a:["She stopped studying.","She reviewed her lessons regularly.","She avoided exercises.","She only studied before examinations."],
+c:1,
+e:"She began reviewing her lessons for a short period every evening."
+},
+
+{
+subject:"Anglais",
+q:"How did Maya treat her mistakes later?",
+a:["She immediately erased them.","She ignored them.","She tried to understand why they happened.","She blamed her classmates."],
+c:2,
+e:"She used mistakes as information and tried to understand their causes."
+},
+
+{
+subject:"Anglais",
+q:"Why was Maya's study group useful?",
+a:["Everyone had exactly the same abilities.","The students had different strengths.","They never discussed schoolwork.","They only prepared for sports."],
+c:1,
+e:"Each student had different strengths, allowing them to help one another."
+},
+
+{
+subject:"Anglais",
+q:"What did Maya discover when helping younger students?",
+a:["Helping others could improve her own understanding.","Teaching was impossible.","Younger students knew everything.","She no longer needed to study."],
+c:0,
+e:"Explaining ideas to others also helped Maya understand them better."
+},
+
+{
+subject:"Anglais",
+q:"What did Maya consider her greatest achievement?",
+a:["Getting the highest mark.","Becoming famous.","Learning how to learn.","Winning a competition."],
+c:2,
+e:"She said that her greatest achievement was learning how to learn."
+},
+
+{
+subject:"Anglais",
+q:"What is the main message of the text?",
+a:["Only high marks matter.","Mistakes can be useful in the learning process.","Students should avoid difficult exercises.","Success happens immediately."],
+c:1,
+e:"The text presents mistakes as useful information and emphasizes regular progress."
+},
+
+{
+subject:"Anglais",
+q:"The word 'obstacle' is closest in meaning to:",
+a:["difficulty","celebration","solution","reward"],
+c:0,
+e:"An obstacle is something that makes progress difficult."
+},
+
+{
+subject:"Anglais",
+q:"The word 'achievement' means:",
+a:["failure","accomplishment","question","mistake"],
+c:1,
+e:"Achievement means an accomplishment or successful result."
+},
+
+{
+subject:"Anglais",
+q:"If someone is 'frustrated', they are generally:",
+a:["annoyed because something is difficult","completely asleep","extremely wealthy","uninterested in everything"],
+c:0,
+e:"Frustration often comes from difficulty or failure to obtain a desired result."
+},
+
+{
+subject:"Anglais",
+q:"The word 'eventually' means:",
+a:["immediately","never","in the end","yesterday"],
+c:2,
+e:"Eventually means in the end, after some time."
+},
+
+{
+subject:"Anglais",
+q:"The closest meaning of 'valuable' is:",
+a:["useless","important or useful","expensive only","dangerous"],
+c:1,
+e:"Valuable can mean important, useful or worth a lot."
+},
+
+{
+subject:"Anglais",
+q:"Choose the correct sentence:",
+a:["She study every day.","She studies every day.","She studying every day.","She studied every day now."],
+c:1,
+e:"With he/she/it in the present simple, the verb generally takes -s."
+},
+
+{
+subject:"Anglais",
+q:"Choose the correct form: 'Maya ___ her lessons now.'",
+a:["reviews","reviewed","is reviewing","has review"],
+c:2,
+e:"The present continuous is used for an action happening now."
+},
+
+{
+subject:"Anglais",
+q:"Choose the correct past form: 'She ___ many mistakes yesterday.'",
+a:["makes","made","has make","making"],
+c:1,
+e:"The past simple of 'make' is 'made'."
+},
+
+{
+subject:"Anglais",
+q:"Which sentence is in the past continuous?",
+a:["She studies.","She studied.","She was studying.","She has studied."],
+c:2,
+e:"'Was studying' is the past continuous."
+},
+
+{
+subject:"Anglais",
+q:"Choose the correct present perfect form:",
+a:["She has improved.","She have improved.","She improving.","She improved now."],
+c:0,
+e:"The present perfect uses has/have + past participle."
+},
+
+{
+subject:"Anglais",
+q:"By next year, Maya ___ her study method.",
+a:["will have improved","improves","improved","is improve"],
+c:0,
+e:"The future perfect uses will have + past participle."
+},
+
+{
+subject:"Anglais",
+q:"Which modal expresses ability?",
+a:["must","can","should","might"],
+c:1,
+e:"'Can' expresses ability."
+},
+
+{
+subject:"Anglais",
+q:"If Maya had more time, she ___ more exercises.",
+a:["will do","would do","does","did"],
+c:1,
+e:"The second conditional uses if + past simple, would + verb."
+},
+
+{
+subject:"Anglais",
+q:"Choose the correct comparative form:",
+a:["more easy","easier","most easy","easyer"],
+c:1,
+e:"The comparative of 'easy' is 'easier'."
+},
+
+{
+subject:"Anglais",
+q:"Choose the correct superlative:",
+a:["the goodest","the better","the best","bestest"],
+c:2,
+e:"The superlative form of 'good' is 'the best'."
+},
+
+{
+subject:"Anglais",
+q:"Choose the correct sentence:",
+a:["She has studied since Monday.","She has studied for Monday.","She studied since two hours.","She is study since Monday."],
+c:0,
+e:"'Since' is used with a starting point such as Monday."
+},
+
+
+/* ================= FRANÇAIS ================= */
+
+{
+subject:"Français",
+q:"Pourquoi Maya évitait-elle de parler de son premier contrôle ?",
+a:["Elle avait perdu sa feuille.","Elle craignait le jugement de ses camarades.","Elle détestait les mathématiques.","Elle voulait changer d'école."],
+c:1,
+e:"Elle avait peur que ses camarades la considèrent comme moins intelligente."
+},
+
+{
+subject:"Français",
+q:"Que l'enseignant aide-t-il Maya à identifier ?",
+a:["Ses qualités sportives.","L'origine de ses erreurs.","Ses nouveaux camarades.","Une nouvelle école."],
+c:1,
+e:"Le professeur l'aide à identifier l'origine de ses erreurs."
+},
+
+{
+subject:"Français",
+q:"Quelle était l'une des causes de ses erreurs ?",
+a:["Elle calculait trop rapidement.","Elle ne venait jamais en classe.","Elle ne travaillait jamais.","Elle refusait de lire."],
+c:0,
+e:"Certaines erreurs provenaient de calculs effectués trop rapidement."
+},
+
+{
+subject:"Français",
+q:"Quelle habitude Maya adopte-t-elle ?",
+a:["Elle cesse de réviser.","Elle révise régulièrement ses leçons.","Elle étudie uniquement la veille.","Elle évite les exercices."],
+c:1,
+e:"Elle se met à réviser ses leçons chaque soir pendant une courte période."
+},
+
+{
+subject:"Français",
+q:"Que fait Maya lorsqu'elle commet une erreur ?",
+a:["Elle l'efface immédiatement.","Elle accuse quelqu'un.","Elle cherche à comprendre pourquoi elle l'a commise.","Elle abandonne l'exercice."],
+c:2,
+e:"Elle cherche à comprendre la cause de son erreur."
+},
+
+{
+subject:"Français",
+q:"Pourquoi le groupe d'étude est-il efficace ?",
+a:["Les élèves ont exactement les mêmes compétences.","Les élèves possèdent des forces différentes.","Ils ne travaillent jamais ensemble.","Ils ne parlent que de sport."],
+c:1,
+e:"Chaque membre possède des qualités différentes et peut aider les autres."
+},
+
+{
+subject:"Français",
+q:"Que découvre Maya en aidant les élèves plus jeunes ?",
+a:["Elle n'a plus besoin d'étudier.","Expliquer aide aussi à mieux comprendre.","Les jeunes savent tout.","Elle doit arrêter les mathématiques."],
+c:1,
+e:"Expliquer une notion à quelqu'un peut renforcer sa propre compréhension."
+},
+
+{
+subject:"Français",
+q:"Quelle est la plus grande réussite de Maya ?",
+a:["Avoir les meilleures notes.","Être célèbre.","Avoir appris à apprendre.","Gagner une compétition."],
+c:2,
+e:"Maya considère qu'elle a surtout appris à apprendre."
+},
+
+{
+subject:"Français",
+q:"Quelle idée principale ressort du texte ?",
+a:["Une mauvaise note signifie qu'on est incapable.","Les erreurs peuvent servir à progresser.","Il faut éviter les exercices difficiles.","Les progrès sont toujours immédiats."],
+c:1,
+e:"Le texte présente les erreurs comme des informations utiles pour progresser."
+},
+
+{
+subject:"Français",
+q:"Quel est le contraire de « faiblesse » ?",
+a:["difficulté","force","erreur","lacune"],
+c:1,
+e:"Le contraire de faiblesse est force."
+},
+
+{
+subject:"Français",
+q:"Dans « elle révise régulièrement », « régulièrement » est :",
+a:["un nom","un adjectif","un adverbe","un pronom"],
+c:2,
+e:"« Régulièrement » est un adverbe qui précise la manière ou la fréquence."
+},
+
+{
+subject:"Français",
+q:"Dans « ses leçons », « ses » est :",
+a:["un déterminant possessif","un pronom personnel","un adverbe","une préposition"],
+c:0,
+e:"« Ses » est un déterminant possessif."
+},
+
+{
+subject:"Français",
+q:"Dans « les élèves qui travaillent », « qui » est :",
+a:["un article","un pronom relatif","un adverbe","une conjonction"],
+c:1,
+e:"« Qui » introduit une proposition subordonnée relative."
+},
+
+{
+subject:"Français",
+q:"Quel est le féminin de « intelligent » ?",
+a:["intelligente","intelligant","intelligemment","intelligenteuse"],
+c:0,
+e:"Le féminin de « intelligent » est « intelligente »."
+},
+
+{
+subject:"Français",
+q:"Complétez : « Maya et ses camarades ___ leurs leçons. »",
+a:["révise","révisent","révisons","révises"],
+c:1,
+e:"Le sujet « Maya et ses camarades » est pluriel : « révisent »."
+},
+
+{
+subject:"Français",
+q:"Quel temps est utilisé dans « elle avait étudié » ?",
+a:["présent","imparfait","plus-que-parfait","futur simple"],
+c:2,
+e:"« Avait étudié » est au plus-que-parfait."
+},
+
+{
+subject:"Français",
+q:"Complétez : « Il faut que Maya ___ ses erreurs. »",
+a:["comprend","comprenne","comprendra","comprenait"],
+c:1,
+e:"Après « il faut que », on emploie le subjonctif : « comprenne »."
+},
+
+{
+subject:"Français",
+q:"« Elle aurait réussi » est au :",
+a:["conditionnel passé","futur antérieur","plus-que-parfait","passé simple"],
+c:0,
+e:"« Aurait réussi » est une forme du conditionnel passé."
+},
+
+{
+subject:"Français",
+q:"« Elle aura terminé son travail » est au :",
+a:["futur antérieur","futur simple","conditionnel présent","passé composé"],
+c:0,
+e:"« Aura terminé » correspond au futur antérieur."
+},
+
+{
+subject:"Français",
+q:"Dans « Maya comprend ses erreurs », « ses erreurs » est :",
+a:["sujet","COD","COI","attribut"],
+c:1,
+e:"Maya comprend quoi ? Ses erreurs : c'est le COD."
+},
+
+{
+subject:"Français",
+q:"Dans « Maya parle à son professeur », « à son professeur » est :",
+a:["COD","COI","sujet","attribut"],
+c:1,
+e:"Maya parle à qui ? À son professeur : c'est un COI."
+},
+
+{
+subject:"Français",
+q:"« Je pense qu'elle progressera » contient une :",
+a:["proposition subordonnée complétive","proposition principale uniquement","relative uniquement","proposition infinitive"],
+c:0,
+e:"« qu'elle progressera » complète le verbe « pense » : c'est une subordonnée complétive."
+},
+
+{
+subject:"Français",
+q:"Quelle phrase est à la voix active ?",
+a:["Le cours est expliqué par le professeur.","Le professeur explique le cours.","Le cours a été expliqué.","Le cours sera expliqué."],
+c:1,
+e:"Dans la voix active, le sujet accomplit l'action : le professeur explique."
+},
+
+{
+subject:"Français",
+q:"Quelle phrase respecte l'accord du participe passé ?",
+a:["Les filles sont arrivé.","Les filles sont arrivées.","Les filles sont arrivée.","Les filles ont arrivées."],
+c:1,
+e:"Avec « être », le participe passé s'accorde avec le sujet : « arrivées »."
+},
+
+{
+subject:"Français",
+q:"Quel mot signifie « manque dans les connaissances » ?",
+a:["lacune","succès","récompense","force"],
+c:0,
+e:"Une lacune est un manque ou une insuffisance dans les connaissances."
+},
+
+
+/* ================= MATHS ================= */
+
+{
+subject:"Maths",
+q:"Quel est le domaine de définition de f(x)=√(2x−6) ?",
+a:["x≥3","x≤3","x>0","R"],
+c:0,
+e:"Il faut 2x−6≥0, donc x≥3."
+},
+
+{
+subject:"Maths",
+q:"Le domaine de définition de f(x)=1/(x−4) est :",
+a:["R","R\\{4}","[4,+∞[","]-∞,4["],
+c:1,
+e:"Le dénominateur ne peut pas être nul, donc x≠4."
+},
+
+{
+subject:"Maths",
+q:"Si f(x)=x² et g(x)=x+1, alors (f∘g)(x) vaut :",
+a:["x²+1","(x+1)²","x²+x","2x+1"],
+c:1,
+e:"f(g(x))=(x+1)²."
+},
+
+{
+subject:"Maths",
+q:"lim x→+∞ de (3x²−1)/(x²+2) vaut :",
+a:["0","1","3","+∞"],
+c:2,
+e:"Les degrés sont égaux : la limite est le rapport des coefficients dominants, 3."
+},
+
+{
+subject:"Maths",
+q:"La droite x=2 est une asymptote verticale de f si :",
+a:["f(x)→0 en 2","f(x)→∞ lorsque x→2","f(2)=0","f est constante"],
+c:1,
+e:"Une asymptote verticale correspond à une divergence vers l'infini près d'une valeur interdite."
+},
+
+{
+subject:"Maths",
+q:"La dérivée de f(x)=x³ est :",
+a:["x²","2x²","3x²","3x"],
+c:2,
+e:"(x³)'=3x²."
+},
+
+{
+subject:"Maths",
+q:"Pour x>0, la dérivée de ln(x) est :",
+a:["x","1/x","ln(x)/x","1"],
+c:1,
+e:"(ln x)'=1/x pour x>0."
+},
+
+{
+subject:"Maths",
+q:"La dérivée de ln(3x+1) est :",
+a:["1/(3x+1)","3/(3x+1)","3x+1","ln(3x+1)"],
+c:1,
+e:"Avec la dérivation composée : (ln u)'=u'/u, donc 3/(3x+1)."
+},
+
+{
+subject:"Maths",
+q:"L'axe de symétrie de la parabole y=x²−4x+3 est :",
+a:["x=1","x=2","x=3","x=4"],
+c:1,
+e:"Pour ax²+bx+c, l'axe est x=−b/(2a)=4/2=2."
+},
+
+{
+subject:"Maths",
+q:"Pour étudier complètement une fonction, on étudie notamment :",
+a:["seulement son domaine","domaine, limites, dérivée, variations et éventuellement asymptotes","seulement sa valeur en 0","uniquement sa dérivée"],
+c:1,
+e:"Une étude complète comprend ces différents éléments."
+},
+
+{
+subject:"Maths",
+q:"Développer (x+3)(x−2) donne :",
+a:["x²+x−6","x²−5x+6","x²+5x−6","x²−6"],
+c:0,
+e:"x²−2x+3x−6=x²+x−6."
+},
+
+{
+subject:"Maths",
+q:"Factoriser x²−9 donne :",
+a:["(x−9)²","(x−3)(x+3)","(x−3)²","x(x−9)"],
+c:1,
+e:"C'est une différence de deux carrés : x²−3²."
+},
+
+{
+subject:"Maths",
+q:"Le produit (x−2)(x+5) est négatif lorsque :",
+a:["x<−5 ou x>2","−5<x<2","x>−5","x<2"],
+c:1,
+e:"Le produit de deux facteurs de signes opposés est négatif entre les deux racines."
+},
+
+{
+subject:"Maths",
+q:"Pour l'expression 1/(x²−9), les valeurs interdites sont :",
+a:["x=0","x=3 seulement","x=−3 et x=3","aucune"],
+c:2,
+e:"x²−9=(x−3)(x+3), donc x≠−3 et x≠3."
+},
+
+{
+subject:"Maths",
+q:"Pour x≠3, (x²−9)/(x−3) se simplifie en :",
+a:["x−3","x+3","x²−3","3x"],
+c:1,
+e:"x²−9=(x−3)(x+3), donc l'expression vaut x+3 pour x≠3."
+},
+
+{
+subject:"Maths",
+q:"Dans un triangle rectangle, si les côtés de l'angle droit mesurent 3 et 4, l'hypoténuse vaut :",
+a:["5","6","7","12"],
+c:0,
+e:"D'après Pythagore : 3²+4²=25, donc l'hypoténuse vaut 5."
+},
+
+{
+subject:"Maths",
+q:"Le théorème de Thalès permet notamment de calculer :",
+a:["des longueurs proportionnelles","uniquement des angles droits","des probabilités","des dérivées"],
+c:0,
+e:"Thalès établit des rapports de longueurs dans une configuration de droites parallèles."
+},
+
+{
+subject:"Maths",
+q:"Si A(1,2) et B(4,6), les coordonnées de AB sont :",
+a:["(3,4)","(5,8)","(−3,−4)","(4,6)"],
+c:0,
+e:"AB=(4−1,6−2)=(3,4)."
+},
+
+{
+subject:"Maths",
+q:"sin(30°) vaut :",
+a:["0","1/2","√2/2","1"],
+c:1,
+e:"sin(30°)=1/2."
+},
+
+{
+subject:"Maths",
+q:"Quelle identité est correcte ?",
+a:["sin²x+cos²x=1","sin²x−cos²x=1","sin x+cos x=1 toujours","tan x=sin x"],
+c:0,
+e:"L'identité fondamentale est sin²x+cos²x=1."
+},
+
+{
+subject:"Maths",
+q:"Une pièce équilibrée est lancée une fois. La probabilité d'obtenir pile est :",
+a:["0","1/4","1/2","1"],
+c:2,
+e:"Une pièce équilibrée possède deux issues équiprobables."
+},
+
+{
+subject:"Maths",
+q:"Un dé équilibré à six faces est lancé. P(obtenir 6) vaut :",
+a:["1/2","1/3","1/6","6"],
+c:2,
+e:"Une seule face sur six correspond au 6."
+},
+
+{
+subject:"Maths",
+q:"La négation de « Tous les élèves ont réussi » est :",
+a:["Aucun élève n'a réussi.","Au moins un élève n'a pas réussi.","Tous ont échoué.","Un seul a réussi."],
+c:1,
+e:"La négation de « tous » est « au moins un ... ne ... pas »."
+},
+
+{
+subject:"Maths",
+q:"L'implication P⇒Q est fausse lorsque :",
+a:["P est vraie et Q est fausse","P est fausse et Q vraie","P et Q sont vraies","P et Q sont fausses"],
+c:0,
+e:"Une implication est fausse uniquement lorsque l'antécédent est vrai et le conséquent faux."
+},
+
+
+/* ================= CULTURE GENERALE ================= */
+
+{
+subject:"Culture générale",
+q:"Dans quel parc national de RDC trouve-t-on notamment des gorilles de montagne ?",
+a:["Virunga","Salonga","Garamba","Upemba"],
+c:0,
+e:"Le parc national des Virunga est notamment célèbre pour ses gorilles de montagne."
+},
+
+{
+subject:"Culture générale",
+q:"Le parc national de Kahuzi-Biega est notamment connu pour :",
+a:["Les gorilles de Grauer","Les lions du Sahara","Les manchots","Les chameaux"],
+c:0,
+e:"Kahuzi-Biega est notamment connu pour les gorilles de Grauer."
+},
+
+{
+subject:"Culture générale",
+q:"Le parc national de la Salonga protège principalement un vaste ensemble :",
+a:["forestier","désertique","marin","montagneux européen"],
+c:0,
+e:"La Salonga est un vaste parc forestier du bassin du Congo."
+},
+
+{
+subject:"Culture générale",
+q:"Le parc national de Garamba se situe principalement dans :",
+a:["le nord-est de la RDC","le sud-ouest","Kinshasa uniquement","le centre du Kasaï"],
+c:0,
+e:"Garamba se trouve dans le nord-est de la RDC."
+},
+
+{
+subject:"Culture générale",
+q:"Le parc national d'Upemba se situe principalement dans :",
+a:["le sud-est de la RDC","le nord-ouest","Kinshasa","le Kongo-Central uniquement"],
+c:0,
+e:"Upemba se situe dans le sud-est de la RDC."
+},
+
+{
+subject:"Culture générale",
+q:"Quelle ancienne appellation coloniale correspond à Kinshasa ?",
+a:["Élisabethville","Léopoldville","Stanleyville","Coquilhatville"],
+c:1,
+e:"Kinshasa était appelée Léopoldville pendant la période coloniale."
+},
+
+{
+subject:"Culture générale",
+q:"Quelle ancienne appellation correspond à Lubumbashi ?",
+a:["Stanleyville","Léopoldville","Élisabethville","Boma"],
+c:2,
+e:"Lubumbashi était appelée Élisabethville."
+},
+
+{
+subject:"Culture générale",
+q:"Quelle ancienne appellation correspond à Kisangani ?",
+a:["Stanleyville","Léopoldville","Élisabethville","Matadi"],
+c:0,
+e:"Kisangani était appelée Stanleyville."
+},
+
+{
+subject:"Culture générale",
+q:"Quel est le chef-lieu du Haut-Katanga ?",
+a:["Kolwezi","Lubumbashi","Goma","Mbuji-Mayi"],
+c:1,
+e:"Lubumbashi est le chef-lieu du Haut-Katanga."
+},
+
+{
+subject:"Culture générale",
+q:"Quel est le chef-lieu du Lualaba ?",
+a:["Kolwezi","Lubumbashi","Kananga","Kindu"],
+c:0,
+e:"Kolwezi est le chef-lieu de la province du Lualaba."
+},
+
+{
+subject:"Culture générale",
+q:"Quel est le chef-lieu du Nord-Kivu ?",
+a:["Bukavu","Goma","Bunia","Beni"],
+c:1,
+e:"Goma est le chef-lieu du Nord-Kivu."
+},
+
+{
+subject:"Culture générale",
+q:"La RDC a proclamé son indépendance le :",
+a:["30 juin 1960","1er janvier 1960","24 avril 1965","17 mai 1997"],
+c:0,
+e:"L'indépendance de la RDC a été proclamée le 30 juin 1960."
+},
+
+{
+subject:"Culture générale",
+q:"Qui fut le premier Premier ministre de la République du Congo indépendante en 1960 ?",
+a:["Mobutu Sese Seko","Patrice Emery Lumumba","Joseph Kasa-Vubu","Laurent-Désiré Kabila"],
+c:1,
+e:"Patrice Emery Lumumba fut le premier Premier ministre du Congo indépendant."
+},
+
+{
+subject:"Culture générale",
+q:"Le fleuve Congo se jette dans :",
+a:["l'océan Indien","l'océan Atlantique","la mer Méditerranée","le lac Tanganyika"],
+c:1,
+e:"Le fleuve Congo se jette dans l'océan Atlantique."
+},
+
+{
+subject:"Culture générale",
+q:"Le lac Tanganyika est partagé notamment par la RDC et :",
+a:["la Tanzanie","le Sénégal","le Maroc","l'Égypte"],
+c:0,
+e:"La RDC et la Tanzanie bordent le lac Tanganyika."
+},
+
+{
+subject:"Culture générale",
+q:"Le Conseil de sécurité est un organe principal de :",
+a:["l'ONU","l'Union européenne","la FIFA","l'UNESCO uniquement"],
+c:0,
+e:"Le Conseil de sécurité est l'un des principaux organes des Nations unies."
+},
+
+{
+subject:"Culture générale",
+q:"Le siège de l'Union africaine se trouve à :",
+a:["Nairobi","Addis-Abeba","Kinshasa","Lagos"],
+c:1,
+e:"Le siège de l'Union africaine est à Addis-Abeba, en Éthiopie."
+},
+
+{
+subject:"Culture générale",
+q:"Aimé Césaire est notamment connu comme :",
+a:["un écrivain et poète martiniquais","un président congolais","un explorateur britannique","un scientifique américain"],
+c:0,
+e:"Aimé Césaire est un grand écrivain et poète martiniquais, figure de la Négritude."
+},
+
+{
+subject:"Culture générale",
+q:"Sony Labou Tansi était :",
+a:["un écrivain congolais","un explorateur belge","un musicien américain","un scientifique français"],
+c:0,
+e:"Sony Labou Tansi est un important écrivain de la littérature congolaise."
+},
+
+{
+subject:"Culture générale",
+q:"Chinua Achebe était un grand écrivain :",
+a:["nigérian","congolais","égyptien","sud-africain"],
+c:0,
+e:"Chinua Achebe était un écrivain nigérian majeur."
+},
+
+{
+subject:"Culture générale",
+q:"Victor Hugo est l'auteur de :",
+a:["Les Misérables","Le Monde s'effondre","Une si longue lettre","L'Aventure ambiguë"],
+c:0,
+e:"Les Misérables est une œuvre majeure de Victor Hugo."
+},
+
+{
+subject:"Culture générale",
+q:"Selon les informations internationales d'octobre 2026 utilisées pour ce test, le Conseil de sécurité de l'ONU a notamment appelé à :",
+a:["la poursuite du conflit sans négociation","un retrait immédiat et sans condition des forces rwandaises de l'est de la RDC","la fermeture de toutes les frontières africaines","la suppression de la MONUSCO"],
+c:1,
+e:"Le Conseil de sécurité a réitéré son appel au retrait immédiat et sans condition des forces rwandaises et à la cessation du soutien à l'AFC/M23."
+},
+
+{
+subject:"Culture générale",
+q:"Quels processus de paix concernant la RDC étaient notamment encouragés en octobre 2026 ?",
+a:["Washington et Doha","Paris et Londres","Rome et Madrid","Tokyo et Pékin"],
+c:0,
+e:"Les processus de Washington et de Doha étaient notamment mentionnés dans les efforts de paix."
+},
+
+{
+subject:"Culture générale",
+q:"Combien de sites naturels de la RDC sont inscrits sur la Liste du patrimoine mondial de l'UNESCO ?",
+a:["2","3","5","10"],
+c:2,
+e:"La RDC compte cinq biens naturels inscrits au patrimoine mondial : Virunga, Garamba, Kahuzi-Biega, Salonga et la Réserve de faune à okapis."
+},
+
+{
+subject:"Culture générale",
+q:"Quel est le plus grand océan du monde ?",
+a:["Atlantique","Indien","Pacifique","Arctique"],
+c:2,
+e:"L'océan Pacifique est le plus vaste des océans."
+}
+
+];
+
+
+/* =========================================================
+   AJOUT : SUITE ARITHMETIQUE
+========================================================= */
+
+questions.push({
+subject:"Maths",
+q:"Une suite arithmétique de premier terme 3 et de raison 5 a pour terme u₄ :",
+a:["13","18","20","23"],
+c:1,
+e:"u₄=u₁+3r=3+3×5=18."
+});
+
+
+/* =========================================================
+   ÉTAT DU TEST
+========================================================= */
+
+let name="";
+let current=0;
+
+let subjectQuestions=[];
+let globalQuestions=[];
+
+let answers=[];
+
+let readTimer=null;
+let questionTimer=null;
+
+let readingRemaining=900;
+let questionRemaining=60;
+
+let totalSpent=0;
+let testStarted=false;
+
+let subjectStats={};
+
+const subjectOrder=[
+  "Anglais",
+  "Français",
+  "Maths",
+  "Culture générale"
+];
+
+
+/* =========================================================
+   MELANGE
+========================================================= */
+
+function shuffle(array){
+
+  let arr=[...array];
+
+  for(let i=arr.length-1;i>0;i--){
+
+    const j=Math.floor(Math.random()*(i+1));
+
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+
+  return arr;
+}
+
+
+/* =========================================================
+   PREPARATION DES QUESTIONS
+========================================================= */
+
+function prepareQuestions(){
+
+  globalQuestions=[];
+
+  subjectOrder.forEach(subject=>{
+
+    let list=questions.filter(q=>q.subject===subject);
+
+    list=shuffle(list);
+
+    list=list.map(q=>{
+
+      let options=[
+        {text:q.a[0],correct:q.c===0},
+        {text:q.a[1],correct:q.c===1},
+        {text:q.a[2],correct:q.c===2},
+        {text:q.a[3],correct:q.c===3}
+      ];
+
+      options=shuffle(options);
+
+      return {
+        ...q,
+        options:options
+      };
+
+    });
+
+    globalQuestions.push(...list);
+  });
+
+  answers=new Array(globalQuestions.length).fill(null);
+
+  subjectStats={};
+
+  subjectOrder.forEach(s=>{
+    subjectStats[s]={
+      total:0,
+      correct:0,
+      wrong:0
+    };
+  });
+}
+
+
+/* =========================================================
+   DEMARRAGE
+========================================================= */
+
+function startTest(){
+
+  name=document.getElementById("participantName").value.trim();
+
+  if(!name){
+
+    alert("Veuillez entrer votre nom complet.");
+    return;
+  }
+
+  prepareQuestions();
+
+  current=0;
+  totalSpent=0;
+  testStarted=true;
+
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("test").classList.remove("hidden");
+
+  startSection();
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+function getCurrentSubject(){
+
+  return globalQuestions[current].subject;
+
+}
+
+
+function sectionHasReading(subject){
+
+  return subject==="Anglais" || subject==="Français";
+
+}
+
+
+function startSection(){
+
+  const subject=getCurrentSubject();
+
+  document.getElementById("subjectName").textContent=subject;
+
+  if(sectionHasReading(subject)){
+
+    startReading(subject);
+
+  }else{
+
+    startQuestion();
+  }
+
+}
+
+
+/* =========================================================
+   LECTURE
+========================================================= */
+
+function startReading(subject){
+
+  clearInterval(questionTimer);
+  clearInterval(readTimer);
+
+  readingRemaining=900;
+
+  document.getElementById("questionPhase").classList.add("hidden");
+  document.getElementById("readingPhase").classList.remove("hidden");
+
+  document.getElementById("readingTitle").textContent=
+    subject==="Anglais"
+    ? "Reading — English text"
+    : "Lecture — Texte français";
+
+  const text=
+    subject==="Anglais"
+    ? englishText
+    : frenchText;
+
+  document.getElementById("readingText").innerHTML=
+    text.replace(/\n/g,"<br>");
+
+  updateReadingTimer();
+
+  readTimer=setInterval(()=>{
+
+    readingRemaining--;
+
+    totalSpent++;
+
+    updateReadingTimer();
+
+    if(readingRemaining<=0){
+
+      clearInterval(readTimer);
+
+      startQuestion();
+    }
+
+  },1000);
+}
+
+
+function updateReadingTimer(){
+
+  let min=Math.floor(readingRemaining/60);
+  let sec=readingRemaining%60;
+
+  document.getElementById("timer").textContent=
+    String(min).padStart(2,"0")+":"+
+    String(sec).padStart(2,"0");
+
+  document.getElementById("progress").textContent=
+    "Lecture — 15 min maximum";
+}
+
+
+function skipReading(){
+
+  clearInterval(readTimer);
+
+  startQuestion();
+}
+
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+function startQuestion(){
+
+  clearInterval(readTimer);
+  clearInterval(questionTimer);
+
+  document.getElementById("readingPhase").classList.add("hidden");
+  document.getElementById("questionPhase").classList.remove("hidden");
+
+  questionRemaining=60;
+
+  renderQuestion();
+
+  updateQuestionTimer();
+
+  questionTimer=setInterval(()=>{
+
+    questionRemaining--;
+
+    totalSpent++;
+
+    updateQuestionTimer();
+
+    if(questionRemaining<=0){
+
+      clearInterval(questionTimer);
+
+      advanceQuestion(true);
+    }
+
+  },1000);
+}
+
+
+function updateQuestionTimer(){
+
+  document.getElementById("timer").textContent=
+    "00:"+String(questionRemaining).padStart(2,"0");
+
+  document.getElementById("progress").textContent=
+    "Question "+(current+1)+" / "+globalQuestions.length;
+}
+
+
+/* =========================================================
+   AFFICHAGE QUESTION
+========================================================= */
+
+function renderQuestion(){
+
+  const q=globalQuestions[current];
+
+  document.getElementById("subjectName").textContent=q.subject;
+
+  document.getElementById("questionNumber").textContent=
+    "Question "+(current+1)+" / 100";
+
+  document.getElementById("questionText").textContent=q.q;
+
+  const answersBox=document.getElementById("answers");
+
+  answersBox.innerHTML="";
+
+  q.options.forEach((option,index)=>{
+
+    const button=document.createElement("button");
+
+    button.className="answer";
+
+    button.textContent=
+      String.fromCharCode(65+index)+". "+option.text;
+
+    if(answers[current]===index){
+
+      button.classList.add("selected");
+    }
+
+    button.onclick=()=>selectAnswer(index);
+
+    answersBox.appendChild(button);
+  });
+
+
+  const review=document.getElementById("textReviewBtn");
+
+  if(sectionHasReading(q.subject)){
+
+    review.classList.remove("hidden");
+
+  }else{
+
+    review.classList.add("hidden");
+  }
+}
+
+
+function selectAnswer(index){
+
+  answers[current]=index;
+
+  document.querySelectorAll(".answer").forEach((button,i)=>{
+
+    button.classList.toggle(
+      "selected",
+      i===index
+    );
+
+  });
+}
+
+
+/* =========================================================
+   QUESTION SUIVANTE
+========================================================= */
+
+function nextQuestion(){
+
+  if(answers[current]===null){
+
+    alert(
+      "Veuillez sélectionner une réponse avant de passer à la question suivante."
+    );
+
+    return;
+  }
+
+  advanceQuestion(false);
+}
+
+
+function advanceQuestion(fromTimer){
+
+  clearInterval(questionTimer);
+
+  const q=globalQuestions[current];
+
+  subjectStats[q.subject].total++;
+
+  if(
+    answers[current]!==null &&
+    q.options[answers[current]] &&
+    q.options[answers[current]].correct
+  ){
+
+    subjectStats[q.subject].correct++;
+
+  }else{
+
+    subjectStats[q.subject].wrong++;
+  }
+
+
+  const oldSubject=q.subject;
+
+  current++;
+
+  if(current>=globalQuestions.length){
+
+    finishTest();
+
+    return;
+  }
+
+  const newSubject=globalQuestions[current].subject;
+
+  document.getElementById("subjectName").textContent=newSubject;
+
+  /*
+    Si on change de matière et que la nouvelle matière possède
+    un texte, on lance la phase de lecture.
+  */
+
+  if(newSubject!==oldSubject && sectionHasReading(newSubject)){
+
+    startReading(newSubject);
+
+  }else{
+
+    startQuestion();
+  }
+}
+
+
+/* =========================================================
+   TEXTE PENDANT LES QUESTIONS
+========================================================= */
+
+function openText(){
+
+  const subject=globalQuestions[current].subject;
+
+  document.getElementById("modalTitle").textContent=
+    subject==="Anglais"
+    ? "English text"
+    : "Texte français";
+
+  document.getElementById("modalText").innerHTML=
+    (subject==="Anglais"
+      ? englishText
+      : frenchText
+    ).replace(/\n/g,"<br>");
+
+  document.getElementById("textModal").classList.remove("hidden");
+}
+
+
+function closeText(){
+
+  document.getElementById("textModal").classList.add("hidden");
+}
+
+
+/* =========================================================
+   FIN DU TEST
+========================================================= */
+
+function finishTest(){
+
+  clearInterval(questionTimer);
+  clearInterval(readTimer);
+
+  testStarted=false;
+
+  document.getElementById("test").classList.add("hidden");
+  document.getElementById("results").classList.remove("hidden");
+
+  showResults();
+}
+
+
+/* =========================================================
+   RESULTATS
+========================================================= */
+
+function showResults(){
+
+  document.getElementById("participantResult").textContent=
+    "Participant : "+name;
+
+  let totalCorrect=0;
+  let totalWrong=0;
+
+  subjectOrder.forEach(subject=>{
+
+    totalCorrect+=subjectStats[subject].correct;
+    totalWrong+=subjectStats[subject].wrong;
+
+  });
+
+  const percentage=
+    Math.round((totalCorrect/100)*100);
+
+  document.getElementById("totalScore").textContent=
+    totalCorrect+" / 100";
+
+  document.getElementById("totalPercentage").textContent=
+    percentage+" %";
+
+  document.getElementById("totalMistakes").textContent=
+    totalWrong+" erreur(s)";
+
+
+  document.getElementById("totalTime").textContent=
+    "⏱ Temps total réellement passé : "+
+    formatTime(totalSpent);
+
+
+  const container=
+    document.getElementById("subjectResults");
+
+  container.innerHTML="";
+
+
+  subjectOrder.forEach(subject=>{
+
+    const stat=subjectStats[subject];
+
+    const pct=
+      Math.round((stat.correct/25)*100);
+
+    const card=document.createElement("div");
+
+    card.className="subject-card";
+
+    card.innerHTML=`
+
+      <h3>${subject}</h3>
+
+      <div class="stat">
+        <strong>Score :</strong>
+        ${stat.correct} / 25
+      </div>
+
+      <div class="stat">
+        <strong>Pourcentage :</strong>
+        ${pct} %
+      </div>
+
+      <div class="stat">
+        <strong>Erreurs :</strong>
+        ${stat.wrong}
+      </div>
+
+    `;
+
+    container.appendChild(card);
+
+  });
+
+
+  showErrors();
+}
+
+
+/* =========================================================
+   ERREURS
+========================================================= */
+
+function showErrors(){
+
+  const errorList=document.getElementById("errorList");
+
+  errorList.innerHTML="";
+
+  let number=0;
+
+  globalQuestions.forEach((q,index)=>{
+
+    const userAnswer=answers[index];
+
+    const isCorrect=
+      userAnswer!==null &&
+      q.options[userAnswer] &&
+      q.options[userAnswer].correct;
+
+
+    if(!isCorrect){
+
+      number++;
+
+      let correctAnswer="";
+
+      q.options.forEach(option=>{
+
+        if(option.correct){
+
+          correctAnswer=option.text;
+        }
+
+      });
+
+      let userText=
+        userAnswer===null
+        ? "Aucune réponse"
+        : q.options[userAnswer].text;
+
+      const div=document.createElement("div");
+
+      div.className="error-item";
+
+      div.innerHTML=`
+
+        <strong>${number}. ${q.subject}</strong>
+
+        <p style="margin-top:8px;">
+          <strong>Question :</strong>
+          ${q.q}
+        </p>
+
+        <p class="wrong">
+          ❌ Votre réponse :
+          ${userText}
+        </p>
+
+        <p class="correct">
+          ✅ Bonne réponse :
+          ${correctAnswer}
+        </p>
+
+        <div class="explanation">
+          <strong>Explication :</strong>
+          ${q.e}
+        </div>
+
+      `;
+
+      errorList.appendChild(div);
+    }
+
+  });
+
+
+  if(number===0){
+
+    errorList.innerHTML=`
+      <p class="correct">
+        🎉 Excellent ! Vous n'avez aucune erreur.
+      </p>
+    `;
+  }
+}
+
+
+/* =========================================================
+   TEMPS
+========================================================= */
+
+function formatTime(seconds){
+
+  const hours=Math.floor(seconds/3600);
+
+  const minutes=Math.floor(
+    (seconds%3600)/60
+  );
+
+  const secs=seconds%60;
+
+  if(hours>0){
+
+    return (
+      hours+" h "+
+      String(minutes).padStart(2,"0")+" min "+
+      String(secs).padStart(2,"0")+" s"
+    );
+
+  }
+
+  return (
+    minutes+" min "+
+    String(secs).padStart(2,"0")+" s"
+  );
+}
+
+
+/* =========================================================
+   ANTI-TRICHE
+========================================================= */
+
+let warningShown=false;
+
+document.addEventListener("visibilitychange",()=>{
+
+  if(
+    document.hidden &&
+    testStarted &&
+    !warningShown
+  ){
+
+    warningShown=true;
+
+    alert(
+      "⚠️ TENTATIVE DE TRICHE\n\n"+
+      "Vous avez quitté la page du test.\n"+
+      "Cette action peut être considérée comme une tentative de triche."
+    );
+
+    setTimeout(()=>{
+      warningShown=false;
+    },3000);
+  }
+
+});
+
+
+window.addEventListener("beforeunload",(event)=>{
+
+  if(testStarted){
+
+    event.preventDefault();
+
+    event.returnValue=
+      "Vous êtes en train de passer un test. Voulez-vous vraiment quitter la page ?";
+
+  }
+
+});
+
+
+/* =========================================================
+   BLOQUER LE RETOUR DU NAVIGATEUR
+========================================================= */
+
+history.pushState(null,"",location.href);
+
+window.addEventListener("popstate",()=>{
+
+  if(testStarted){
+
+    alert(
+      "⚠️ Retour arrière désactivé pendant le test."
+    );
+
+    history.pushState(null,"",location.href);
+
+  }
+
+});
+
+
+/* =========================================================
+   VERIFICATION DU NOMBRE DE QUESTIONS
+========================================================= */
+
+console.log(
+  "Nombre total de questions :",
+  questions.length
+);
+
+console.log(
+  "Questions Anglais :",
+  questions.filter(q=>q.subject==="Anglais").length
+);
+
+console.log(
+  "Questions Français :",
+  questions.filter(q=>q.subject==="Français").length
+);
+
+console.log(
+  "Questions Maths :",
+  questions.filter(q=>q.subject==="Maths").length
+);
+
+console.log(
+  "Questions Culture générale :",
+  questions.filter(q=>q.subject==="Culture générale").length
+);
+
+</script>
+
+</body>
+  </html>
